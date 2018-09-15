@@ -10,18 +10,16 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
-    @IBOutlet weak var label: UILabel!
-    var index : Int!
+    @IBOutlet weak var imageViewPost: UIImageView!
+    
+    var url: URL?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        label.text = ("You tapped the cell at index \(index)")
         // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        if let url = url{
+            imageViewPost.af_setImage(withURL: url)
+        }
     }
     
 

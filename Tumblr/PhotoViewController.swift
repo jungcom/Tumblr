@@ -35,7 +35,6 @@ class PhotoViewController: UIViewController, UITableViewDataSource, UITableViewD
                 print(error.localizedDescription)
             } else if let data = data,
                 let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
-                print(dataDictionary)
                 
                 // Get the dictionary from the response key
                 let responseDictionary = dataDictionary["response"] as! [String: Any]
@@ -95,11 +94,23 @@ class PhotoViewController: UIViewController, UITableViewDataSource, UITableViewD
         // Get the index path from the cell that was tapped
         let indexPath = tableView.indexPathForSelectedRow
         // Get the Row of the Index Path and set as index
-        let index = indexPath?.row
-        // Get in touch with the DetailViewController
-        let detailViewController = segue.destination as! DetailViewController
-        // Pass on the data to the Detail ViewController by setting it's indexPathRow value
-        detailViewController.index = index
+        let post = posts[(indexPath?.row)!]
+        if let photos = post["photos"] as? [[String: Any]] {
+            // photos is NOT nil, we can use it!
+            // TODO: Get the photo url
+            // 1.
+            let photo = photos[0]
+            // 2.
+            let originalSize = photo["original_size"] as! [String: Any]
+            // 3.
+            let urlString = originalSize["url"] as! String
+            // 4.
+            let url = URL(string: urlString)
+            // Get in touch with the DetailViewController
+            let detailViewController = segue.destination as! DetailViewController
+            // Pass on the data to the Detail ViewController by setting it's indexPathRow value
+            detailViewController.url = url
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
