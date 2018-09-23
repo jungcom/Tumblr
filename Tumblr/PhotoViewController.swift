@@ -18,7 +18,6 @@ class PhotoViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         tableView.delegate = self
         tableView.dataSource = self
-        self.tableView.rowHeight = 300
         
         //refresh Controller
         let refreshControl = UIRefreshControl()
@@ -91,10 +90,16 @@ class PhotoViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
+        let detailViewController = segue.destination as! DetailViewController
+        let cell = sender as! TableViewCell
+        
         // Get the index path from the cell that was tapped
-        let indexPath = tableView.indexPathForSelectedRow
-        // Get the Row of the Index Path and set as index
-        let post = posts[(indexPath?.row)!]
+        let indexPath = tableView.indexPath(for: cell)
+        //let indexPath = tableView.indexPathForSelectedRow
+        
+        // Get the Section of the Index Path and set as index
+        let post = posts[(indexPath?.section)!]
+        
         if let photos = post["photos"] as? [[String: Any]] {
             // photos is NOT nil, we can use it!
             // TODO: Get the photo url
@@ -106,21 +111,27 @@ class PhotoViewController: UIViewController, UITableViewDataSource, UITableViewD
             let urlString = originalSize["url"] as! String
             // 4.
             let url = URL(string: urlString)
-            // Get in touch with the DetailViewController
-            let detailViewController = segue.destination as! DetailViewController
+
             // Pass on the data to the Detail ViewController by setting it's indexPathRow value
             detailViewController.url = url
         }
     }
     
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return posts.count
+        return 1
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return self.posts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell") as! TableViewCell
         
-        let post = posts[indexPath.row]
+        let post = posts[indexPath.section]
+        tableView.deselectRow(at: indexPath, animated: true)
+        
         if let photos = post["photos"] as? [[String: Any]] {
             // photos is NOT nil, we can use it!
             // TODO: Get the photo url
@@ -137,5 +148,38 @@ class PhotoViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
+        headerView.backgroundColor = UIColor(white: 1, alpha: 0.9)
+        
+        let profileView = UIImageView(frame: CGRect(x: 10, y: 10, width: 30, height: 30))
+        profileView.clipsToBounds = true
+        profileView.layer.cornerRadius = 15;
+        profileView.layer.borderColor = UIColor(white: 0.7, alpha: 0.8).cgColor
+        profileView.layer.borderWidth = 1;
+        
+        // Set the avatar
+        profileView.af_setImage(withURL: URL(string: "https://api.tumblr.com/v2/blog/humansofnewyork.tumblr.com/avatar")!)
+        headerView.addSubview(profileView)
+        
+        // Add a UILabel for the date here
+        // Use the section number to get the right URL
+        let post = posts[section] as! [String:Any]
+        let date = post["date"] as! String
+        let label = UILabel(frame: CGRect(x: 50, y: 0, width: 300, height: 50))
+        label.text = date
+        headerView.addSubview(label)
+        
+        return headerView
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50
     }
 }

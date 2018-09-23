@@ -30,14 +30,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gzV-oC-YmF">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="202.5"/>
+                                                    <rect key="frame" x="5" y="5" width="365" height="192.5"/>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="gzV-oC-YmF" firstAttribute="top" secondItem="OBe-5d-EOm" secondAttribute="top" id="NXZ-Uv-Z5n"/>
-                                                <constraint firstAttribute="trailing" secondItem="gzV-oC-YmF" secondAttribute="trailing" id="Qha-na-qDy"/>
-                                                <constraint firstItem="gzV-oC-YmF" firstAttribute="leading" secondItem="OBe-5d-EOm" secondAttribute="leading" id="UiK-bQ-d1Q"/>
-                                                <constraint firstAttribute="bottom" secondItem="gzV-oC-YmF" secondAttribute="bottom" id="ZcL-ol-oAn"/>
+                                                <constraint firstItem="gzV-oC-YmF" firstAttribute="top" secondItem="OBe-5d-EOm" secondAttribute="top" constant="5" id="NXZ-Uv-Z5n"/>
+                                                <constraint firstAttribute="trailing" secondItem="gzV-oC-YmF" secondAttribute="trailing" constant="5" id="Qha-na-qDy"/>
+                                                <constraint firstItem="gzV-oC-YmF" firstAttribute="leading" secondItem="OBe-5d-EOm" secondAttribute="leading" constant="5" id="UiK-bQ-d1Q"/>
+                                                <constraint firstAttribute="bottom" secondItem="gzV-oC-YmF" secondAttribute="bottom" constant="5" id="ZcL-ol-oAn"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -64,7 +64,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="964" y="31.934032983508249"/>
+            <point key="canvasLocation" x="970" y="-10"/>
         </scene>
         <!--Detail View Controller-->
         <scene sceneID="nTw-Oy-O2K">
